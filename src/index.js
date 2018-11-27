@@ -1,5 +1,5 @@
 var Buffer = require('safe-buffer').Buffer
-var util = require('ethereumjs-util')
+var util = require('cse-util')
 var crypto = require('crypto')
 var randomBytes = require('randombytes')
 var scryptsy = require('scrypt.js')
@@ -279,7 +279,7 @@ Wallet.fromV3 = function (input, password, nonStrict) {
   return new Wallet(seed)
 }
 
-Wallet.fromEthSale = function (input, password) {
+Wallet.fromCSESale = function (input, password) {
   assert(typeof password === 'string')
   var json = (typeof input === 'object') ? input : JSON.parse(input)
 
@@ -295,7 +295,7 @@ Wallet.fromEthSale = function (input, password) {
   var seed = decipherBuffer(decipher, encseed.slice(16))
 
   var wallet = new Wallet(util.sha3(seed))
-  if (wallet.getAddress().toString('hex') !== json.ethaddr) {
+  if (wallet.getAddress().toString('hex') !== json.cseaddr) {
     throw new Error('Decoded key mismatch - possibly wrong passphrase')
   }
   return wallet

@@ -1,5 +1,5 @@
 var Wallet = require('./index.js')
-var util = require('ethereumjs-util')
+var util = require('cse-util')
 var crypto = require('crypto')
 var scryptsy = require('scrypt.js')
 var utf8 = require('utf8')
@@ -81,7 +81,7 @@ function decodeCryptojsSalt (input) {
   }
 }
 
-Thirdparty.fromEtherWallet = function (input, password) {
+Thirdparty.fromCSEWallet = function (input, password) {
   var json = (typeof input === 'object') ? input : JSON.parse(input)
 
   var privKey
@@ -107,7 +107,7 @@ Thirdparty.fromEtherWallet = function (input, password) {
     cipher = decodeCryptojsSalt(cipher)
 
     if (!cipher.salt) {
-      throw new Error('Unsupported EtherWallet key format')
+      throw new Error('Unsupported CSEWallet key format')
     }
 
     // derive key/iv using OpenSSL EVP as implemented in CryptoJS
@@ -129,7 +129,7 @@ Thirdparty.fromEtherWallet = function (input, password) {
   return wallet
 }
 
-Thirdparty.fromEtherCamp = function (passphrase) {
+Thirdparty.fromCSECamp = function (passphrase) {
   return new Wallet(util.sha3(Buffer.from(passphrase)))
 }
 
